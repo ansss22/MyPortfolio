@@ -1,11 +1,28 @@
-import { BadgeCheckIcon } from "lucide-react";
+"use client";
+import { motion, useInView } from 'framer-motion'
+import { BadgeCheckIcon } from 'lucide-react';
 import Image from "next/image";
+import { useRef } from 'react';
 
 export default function HeroSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+
   return (
-    <div className="py-16 text-gray-400">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-16 text-gray-400"
+    >
       <div className="max-w-3xl space-y-8">
-        <div className="flex items-center gap-4">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex items-center gap-4"
+        >
           <div className="relative">
             <Image
               src="/assets/images/avatar.jpeg"
@@ -24,16 +41,22 @@ export default function HeroSection() {
             </div>
             <p className="text-gray-400">Full Stack Developer</p>
           </div>
-        </div>
+        </motion.div>
 
-        <p className="text-gray-400 leading-relaxed max-w-2xl">
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-gray-400 leading-relaxed max-w-2xl"
+        >
           I&apos;m a Full Stack Developer based in Morocco. I have a passion for
           developing web applications and solving complex problems. I&apos;m a
           self-taught developer who enjoys building projects that make
           people&apos;s lives easier. I&apos;m always looking for new
           opportunities to learn.
-        </p>
+        </motion.p>
       </div>
-    </div>
+    </motion.div>
   );
 }
+
